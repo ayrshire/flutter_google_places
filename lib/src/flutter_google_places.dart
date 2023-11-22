@@ -7,6 +7,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter/scheduler.dart';
 
 class PlacesAutocompleteWidget extends StatefulWidget {
   final String apiKey;
