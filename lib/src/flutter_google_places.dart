@@ -83,7 +83,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
       context.findAncestorStateOfType<PlacesAutocompleteState>();
 }
 
-class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
+class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {  
   @override
   Widget build(BuildContext context) {
     final theme = widget.themeData ?? Theme.of(context);
@@ -440,6 +440,7 @@ enum Mode { overlay, fullscreen }
 
 abstract class PlacesAutocompleteState extends State<PlacesAutocompleteWidget> {
   TextEditingController? _queryTextController;
+  FocusNode _queryTextFocusNode = FocusNode();
   PlacesAutocompleteResponse? _response;
   GoogleMapsPlaces? _places;
   late bool _searching;
@@ -463,6 +464,10 @@ abstract class PlacesAutocompleteState extends State<PlacesAutocompleteWidget> {
     _queryTextController!.addListener(_onQueryChange);
 
     _queryBehavior.stream.listen(doSearch);
+
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      _queryTextFocusNode.requestFocus();
+    });
   }
 
   Future<void> _initPlaces() async {
